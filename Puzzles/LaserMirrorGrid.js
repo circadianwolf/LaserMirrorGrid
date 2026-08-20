@@ -1,7 +1,9 @@
 class LaserMirrorGrid extends GridBase {
     static #puzzleInfo;
 
-    static #cellGroups = [
+    //#region Lasers 1
+
+    static #cellGroups1 = [
         [0, 0, 0, 1, 1, 1, 2],
         [3, 3, 0, 1, 1, 2, 2],
         [3, 3, 3, 3, 4, 2, 2],
@@ -11,7 +13,7 @@ class LaserMirrorGrid extends GridBase {
         [9, 9, 11, 11, 10, 10, 10]
     ];
     //note that laser endpoints are actually outside the grid proper
-    static get #lasers() {
+    static get #lasers1() {
         return [
             new Laser("A", 3, new LaserEndpoint(-1, 5, CellBorders.Top), new LaserEndpoint(5, -1, CellBorders.Left)),
             new Laser("B", 3, new LaserEndpoint(-1, 6, CellBorders.Top), new LaserEndpoint(6, -1, CellBorders.Left)),
@@ -22,7 +24,60 @@ class LaserMirrorGrid extends GridBase {
         ];
     }
 
-    static GetPuzzle() {
+    //#endregion
+
+    //#region Lasers 2
+
+    static #cellGroups2 = [
+        [0, 0, 0, 0, 1, 1, 1],
+        [0, 2, 2, 3, 1, 1, 1],
+        [4, 4, 2, 3, 3, 1, 1],
+        [3, 3, 3, 3, 3, 5, 6],
+        [7, 8, 5, 5, 5, 5, 6],
+        [7, 8, 7, 9, 9, 5, 10],
+        [7, 7, 7, 11, 11, 11, 10]
+    ];
+
+    static get #lasers2() {
+        return [
+            new Laser("A", 2, new LaserEndpoint(5, -1, CellBorders.Left), new LaserEndpoint(6, -1, CellBorders.Left)),
+            new Laser("B", 2, new LaserEndpoint(-1, 2, CellBorders.Top), new LaserEndpoint(-1, 5, CellBorders.Top)),
+            new Laser("C", 4, new LaserEndpoint(0, 7, CellBorders.Right), new LaserEndpoint(6, 7, CellBorders.Right)),
+            new Laser("D", 2, new LaserEndpoint(-1, 3, CellBorders.Top), new LaserEndpoint(7, 6, CellBorders.Bottom)),
+            new Laser("E", 3, new LaserEndpoint(2, -1, CellBorders.Left), new LaserEndpoint(7, 3, CellBorders.Bottom)),
+            new Laser("F", 2, new LaserEndpoint(0, -1, CellBorders.Left), new LaserEndpoint(1, -1, CellBorders.Left))
+        ];
+    }
+
+    //#endregion
+
+    //#region Lasers 3
+
+    static #cellGroups3 = [
+        [0, 0, 1, 1, 2, 3, 3],
+        [4, 4, 1, 1, 2, 5, 6],
+        [4, 4, 4, 7, 7, 5, 6],
+        [4, 8, 8, 8, 8, 5, 5],
+        [9, 8, 8, 10, 10, 5, 5],
+        [9, 11, 11, 10, 10, 12, 12],
+        [9, 9, 11, 10, 10, 13, 13]
+    ];
+
+    static get #lasers3() {
+        return [
+            new Laser("A", 3, new LaserEndpoint(-1, 3, CellBorders.Top), new LaserEndpoint(0, 7, CellBorders.Right)),
+            new Laser("B", 3, new LaserEndpoint(6, -1, CellBorders.Left), new LaserEndpoint(7, 0, CellBorders.Bottom)),
+            new Laser("C", 1, new LaserEndpoint(5, -1, CellBorders.Left), new LaserEndpoint(7, 5, CellBorders.Bottom)),
+            new Laser("D", 5, new LaserEndpoint(2, -1, CellBorders.Left), new LaserEndpoint(-1, 0, CellBorders.Top)),
+            new Laser("E", 2, new LaserEndpoint(-1, 6, CellBorders.Top), new LaserEndpoint(7, 1, CellBorders.Bottom)),
+            new Laser("F", 1, new LaserEndpoint(-1, 4, CellBorders.Top), new LaserEndpoint(1, 7, CellBorders.Right)),
+            new Laser("G", 3, new LaserEndpoint(3, -1, CellBorders.Left), new LaserEndpoint(7, 2, CellBorders.Bottom))
+        ];
+    }
+
+    //#endregion
+
+    static GetPuzzles() {
         if (this.#puzzleInfo == null) {
             const instructions = `Draw diagonal lines across certain squares to form mirrors, with exactly one mirror per region outlined in bold.
 The mirrors must be placed so that a laser fired horizontally or vertically into the grid from each lettered clue would then
@@ -33,12 +88,18 @@ All mirrors must be reached by at least one laser.
 <br/>Click again to rotate the mirror.
 <br/>Clicking again will remove the mirror.`;
 
-            const progressTracks = [
-                new ProgressTrack(this.LaserProgress, 'Lasers', 6),
-                new ProgressTrack(this.MirrorProgress, 'Mirrors', 12)
-            ];
+            const progressTracks = (laserCount) => {
+                return [
+                    new ProgressTrack(this.LaserProgress, 'Lasers', laserCount),
+                    new ProgressTrack(this.MirrorProgress, 'Mirrors', laserCount * 2)
+                ]
+            }
 
-            this.#puzzleInfo = new GridPuzzle('LaserMirrorGrid', 'Lasers', instructions, progressTracks, LaserMirrorGrid)
+            this.#puzzleInfo = [
+                new GridPuzzle('LaserMirrorGrid1', 'Lasers (1)', instructions, progressTracks(6), LaserMirrorGrid, [LaserMirrorGrid.#cellGroups1, LaserMirrorGrid.#lasers1]),
+                new GridPuzzle('LaserMirrorGrid2', 'Lasers (2)', instructions, progressTracks(6), LaserMirrorGrid, [LaserMirrorGrid.#cellGroups2, LaserMirrorGrid.#lasers2]),
+                new GridPuzzle('LaserMirrorGrid3', 'Lasers (3)', instructions, progressTracks(7), LaserMirrorGrid, [LaserMirrorGrid.#cellGroups3, LaserMirrorGrid.#lasers3])
+            ];
         }
 
         return this.#puzzleInfo;
@@ -58,10 +119,10 @@ All mirrors must be reached by at least one laser.
     /** @type {Mirror[]} */
     Mirrors = [];
 
-    constructor(canvasId, leftX, topY) {
-        super(canvasId, leftX, topY, 50, LaserMirrorGrid.#cellGroups, LaserMirrorGrid.#puzzleInfo.ProgressTracks);
+    constructor(canvasId, leftX, topY, progressTracks, cellGroups, lasers) {
+        super(canvasId, leftX, topY, 50, cellGroups, progressTracks);
 
-        this.Lasers = LaserMirrorGrid.#lasers;
+        this.Lasers = lasers;
         //has to be done after the super() because this.CellGroups is not initialized until then
         this.LoadCellGroups();
     }

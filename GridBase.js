@@ -1,4 +1,6 @@
 class GridBase {
+    static StoredProperties = []; //define in descendant class
+
     //#region Private Variables
 
     #canvasId;
@@ -58,7 +60,7 @@ class GridBase {
 
     //#endregion
 
-    /**
+    /** 
         @param canvasId {string}
         @param leftX {number}
         @param topY {number}
@@ -256,6 +258,26 @@ class GridBase {
 
     //#endregion
 
+    //#region Storage
+
+    UpdateStorage() {
+        //define in descendant class
+    }
+
+    LoadStorage(data) {
+        //define in descendant class
+    }
+
+    UpdateStorageBase(data) {
+        window.localStorage.setItem(this.constructor.name, data);
+    }
+
+    LoadStorageBase() {
+        const data = window.localStorage.getItem(this.constructor.name);
+    }
+
+    //#endregion
+
     //#region Helpers
 
     ClearGrid() {
@@ -279,7 +301,11 @@ class GridBase {
     }
 
     FillGridCell(row, col) {
-        this.CanvasContext.fillRect(this.LeftX + (col * this.CellSize), this.TopY + (row * this.CellSize), this.CellSize, this.CellSize);
+        this.FillGridRect(row, col);
+    }
+
+    FillGridRect(row, col, xOffset = 0, yOffset = 0, width = this.CellSize, height = this.CellSize) {
+        this.CanvasContext.fillRect(this.LeftX + (col * this.CellSize) + xOffset, this.TopY + (row * this.CellSize) + yOffset, width, height);
     }
 
     SetFillStyle(hexColor) {
@@ -324,6 +350,10 @@ class CellBorders {
 
     AddBorder(border) {
         this.#borders = this.#borders | border;
+    }
+
+    RemoveBorder(border) {
+        this.#borders = this.#borders & ~border;
     }
 
     HasBorder(border) {

@@ -7,6 +7,7 @@ class GridPuzzle {
     /** @type {ProgressTrack[]} */
     #progressTracks = [];
     #gridType;
+    #arguments = [];
 
     //#endregion
 
@@ -37,7 +38,7 @@ class GridPuzzle {
         @param progressTracks {ProgressTrack[]}
         @param gridType {any} A class type that inherits from GridBase.
     */
-    constructor(id, title, instructions, progressTracks, gridType) {
+    constructor(id, title, instructions, progressTracks, gridType, args = []) {
         if (typeof gridType !== "function"
             || !('prototype' in gridType)
             || !(gridType.prototype instanceof GridBase))
@@ -48,10 +49,11 @@ class GridPuzzle {
         this.#instructions = instructions;
         this.#progressTracks = progressTracks;
         this.#gridType = gridType;
+        this.#arguments = args;
     }
 
     CreateGrid(canvasId, leftX, topY) {
-        return new this.GridType.prototype.constructor(canvasId, leftX, topY, this.ProgressTracks);
+        return new this.GridType.prototype.constructor(canvasId, leftX, topY, this.ProgressTracks, ...this.#arguments);
     }
 }
 

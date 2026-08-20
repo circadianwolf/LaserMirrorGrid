@@ -63,7 +63,6 @@
 <body>
     <nav>
         <ul id="puzzleList">
-
         </ul>
     </nav>
     <main>
@@ -87,15 +86,17 @@
     <script type="text/javascript" src="GridPuzzleCollection.js"></script>
     <script type="text/javascript" src="Puzzles/LaserMirrorGrid.js"></script>
     <script type="text/javascript" src="Puzzles/HitoriGrid.js"></script>
+    <script type="text/javascript" src="Puzzles/LinesweeperGrid.js"></script>
     <script>
         customElements.define("grid-progress", GridProgressElement);
 
         const puzzleCollection = new GridPuzzleCollection("puzzleList", "puzzleTitle", "instructions", "progress", "hSuccess", "btnReset", "gridCanvas", 50, 50, [
-            LaserMirrorGrid.GetPuzzle(),
-            HitoriGrid.GetPuzzle(),
+            ...LaserMirrorGrid.GetPuzzles(),
+            ...HitoriGrid.GetPuzzles(),
+            //...LinesweeperGrid.GetPuzzles()
         ]);
 
-        puzzleCollection.ChangePuzzle('LaserMirrorGrid');
+        puzzleCollection.ChangePuzzle('LaserMirrorGrid1');
     </script>
 </body>
 </html>

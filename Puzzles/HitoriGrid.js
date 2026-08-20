@@ -1,7 +1,7 @@
 class HitoriGrid extends GridBase {
     static #puzzleInfo;
 
-    static #cells = [
+    static #cells1 = [
         [1, 2, 7, 8, 1, 6, 8, 5],
         [6, 5, 8, 4, 2, 7, 2, 2],
         [4, 6, 3, 6, 8, 6, 5, 7],
@@ -12,9 +12,20 @@ class HitoriGrid extends GridBase {
         [5, 7, 8, 5, 2, 1, 6, 1]
     ];
 
-    static GetPuzzle() {
+    static #cells2 = [
+        [8, 3, 1, 2, 6, 4, 1, 2],
+        [2, 5, 1, 6, 8, 8, 4, 3],
+        [6, 2, 3, 8, 7, 4, 2, 1],
+        [4, 8, 4, 5, 4, 1, 7, 6],
+        [8, 6, 7, 8, 2, 6, 5, 1],
+        [4, 7, 5, 1, 5, 2, 3, 5],
+        [1, 6, 2, 8, 8, 5, 7, 4],
+        [3, 6, 5, 4, 5, 2, 8, 5]
+    ];
+
+    static GetPuzzles() {
         if (this.#puzzleInfo == null) {
-            const instructions = `Shade some squares so that no number epeats in any row or column.
+            const instructions = `Shade some squares so that no number repeats in any row or column.
 Shaded squares cannot touch, except diagonally.
 All unshaded squares must form a single connected region.
 
@@ -29,7 +40,10 @@ All unshaded squares must form a single connected region.
                 new ProgressTrack(this.UnshadedRegionProgress, 'One Unshaded Region', 1)
             ];
 
-            this.#puzzleInfo = new GridPuzzle('HitoriGrid', 'Hitori', instructions, progressTracks, HitoriGrid);
+            this.#puzzleInfo = [
+                new GridPuzzle('HitoriGrid1', 'Hitori (1)', instructions, progressTracks, HitoriGrid, [ HitoriGrid.#cells1 ]),
+                new GridPuzzle('HitoriGrid2', 'Hitori (2)', instructions, progressTracks, HitoriGrid, [ HitoriGrid.#cells2 ])
+            ];
         }
 
         return this.#puzzleInfo;
@@ -43,8 +57,8 @@ All unshaded squares must form a single connected region.
     Rows = [];
     Cols = [];
 
-    constructor(canvasId, leftX, topY) {
-        super(canvasId, leftX, topY, 44, HitoriGrid.#cells, HitoriGrid.#puzzleInfo.ProgressTracks);
+    constructor(canvasId, leftX, topY, progressTracks, cellGroups) {
+        super(canvasId, leftX, topY, 44, cellGroups, progressTracks);
 
         for (let i = 0; i < this.RowCount; i++)
             this.Rows[i] = false;
