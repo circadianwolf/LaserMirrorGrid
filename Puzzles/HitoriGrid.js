@@ -23,6 +23,17 @@ class HitoriGrid extends GridBase {
         [3, 6, 5, 4, 5, 2, 8, 5]
     ];
 
+    static #cells3 = [
+        [5, 1, 3, 6, 4, 6, 7, 5],
+        [7, 3, 7, 6, 8, 8, 2, 1],
+        [4, 2, 6, 2, 3, 2, 5, 7],
+        [8, 6, 7, 5, 8, 1, 4, 2],
+        [1, 5, 1, 7, 8, 7, 2, 6],
+        [6, 7, 2, 4, 5, 4, 1, 4],
+        [1, 4, 6, 8, 8, 5, 2, 3],
+        [2, 5, 8, 3, 1, 4, 6, 5]
+    ];
+
     static GetPuzzles() {
         if (this.#puzzleInfo == null) {
             const instructions = `Shade some squares so that no number repeats in any row or column.
@@ -41,8 +52,9 @@ All unshaded squares must form a single connected region.
             ];
 
             this.#puzzleInfo = [
-                new GridPuzzle('HitoriGrid1', 'Hitori (1)', instructions, progressTracks, HitoriGrid, [ HitoriGrid.#cells1 ]),
-                new GridPuzzle('HitoriGrid2', 'Hitori (2)', instructions, progressTracks, HitoriGrid, [ HitoriGrid.#cells2 ])
+                new GridPuzzle('HitoriGrid1', 'Hitori (1)', instructions, progressTracks, HitoriGrid, [HitoriGrid.#cells1]),
+                new GridPuzzle('HitoriGrid2', 'Hitori (2)', instructions, progressTracks, HitoriGrid, [HitoriGrid.#cells2]),
+                new GridPuzzle('HitoriGrid3', 'Hitori (3)', instructions, progressTracks, HitoriGrid, [HitoriGrid.#cells3])
             ];
         }
 
