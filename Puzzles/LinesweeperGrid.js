@@ -1,3 +1,6 @@
+export { LinesweeperGrid };
+import { GridBase, GridPuzzle, ProgressTrack, CellBorders } from '../Modules.js';
+
 class LinesweeperGrid extends GridBase {
     static #puzzleInfo;
 

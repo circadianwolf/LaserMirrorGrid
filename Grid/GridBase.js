@@ -1,8 +1,11 @@
+export { GridBase };
+import { EventManager, Cell, CellBorders, ProgressTrack, GridProgressElement } from '../Modules.js';
+
 class GridBase {
     static StoredProperties = []; //define in descendant class
 
     //#region Private Variables
-
+    
     #canvasId;
     #canvas;
     #canvasContext;
@@ -152,6 +155,9 @@ class GridBase {
         this.DrawGrid();
     }
 
+    /**
+     * @param {Cell} cell
+     */
     CellClick(cell) {
         //define in descendant class
     }
@@ -325,38 +331,4 @@ class GridBase {
     }
 
     //#endregion
-}
-
-class Cell {
-    Row = -1;
-    Col = -1;
-    Value;
-    Borders = new CellBorders();
-
-    constructor(row, col, value) {
-        this.Row = row;
-        this.Col = col;
-        this.Value = value;
-    }
-}
-
-class CellBorders {
-    static Left = 1 << 0;
-    static Right = 1 << 1;
-    static Top = 1 << 2;
-    static Bottom = 1 << 3;
-
-    #borders = 0;
-
-    AddBorder(border) {
-        this.#borders = this.#borders | border;
-    }
-
-    RemoveBorder(border) {
-        this.#borders = this.#borders & ~border;
-    }
-
-    HasBorder(border) {
-        return (border & this.#borders) !== 0;
-    }
 }

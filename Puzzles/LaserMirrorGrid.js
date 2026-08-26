@@ -1,3 +1,6 @@
+export { LaserMirrorGrid };
+import { GridBase, GridPuzzle, ProgressTrack, CellBorders } from '../Modules.js';
+
 class LaserMirrorGrid extends GridBase {
     static #puzzleInfo;
 

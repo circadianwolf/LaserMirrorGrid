@@ -1,3 +1,6 @@
+export { GridPuzzleCollection };
+import { GridBase, GridPuzzle } from './index.js';
+
 class GridPuzzleCollection {
     static #puzzleListItemClass = "puzzleListItem";
 
@@ -134,7 +137,7 @@ class GridPuzzleCollection {
 
         for (const progressTrack of puzzle.ProgressTracks.values()) {
             const progressElement = document.createElement('grid-progress');
-            const elementId = "gp" + progressTrack.Name
+            const elementId = "gp" + progressTrack.Name;
 
             progressElement.id = elementId;
             progressElement.setAttribute("max", progressTrack.MaxValue);

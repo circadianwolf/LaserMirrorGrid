@@ -78,22 +78,15 @@
         </div>
         <canvas id="gridCanvas" width="450" height="450"></canvas>
     </main>
-    <script type="text/javascript" src="IterableWeakMap.js"></script>
-    <script type="text/javascript" src="EventManager.js"></script>
-    <script type="text/javascript" src="GridProgressElement.js"></script>
-    <script type="text/javascript" src="GridBase.js"></script>
-    <script type="text/javascript" src="GridPuzzle.js"></script>
-    <script type="text/javascript" src="GridPuzzleCollection.js"></script>
-    <script type="text/javascript" src="Puzzles/LaserMirrorGrid.js"></script>
-    <script type="text/javascript" src="Puzzles/HitoriGrid.js"></script>
-    <script type="text/javascript" src="Puzzles/LinesweeperGrid.js"></script>
-    <script>
-        customElements.define("grid-progress", GridProgressElement);
+    <script type="module">
+        import * as GridPuzzles from './Modules.js';
 
-        const puzzleCollection = new GridPuzzleCollection("puzzleList", "puzzleTitle", "instructions", "progress", "hSuccess", "btnReset", "gridCanvas", 50, 50, [
-            ...LaserMirrorGrid.GetPuzzles(),
-            ...HitoriGrid.GetPuzzles(),
-            //...LinesweeperGrid.GetPuzzles()
+        customElements.define("grid-progress", GridPuzzles.GridProgressElement);
+
+        const puzzleCollection = new GridPuzzles.GridPuzzleCollection("puzzleList", "puzzleTitle", "instructions", "progress", "hSuccess", "btnReset", "gridCanvas", 50, 50, [
+            ...GridPuzzles.LaserMirrorGrid.GetPuzzles(),
+            ...GridPuzzles.HitoriGrid.GetPuzzles(),
+            //...GridPuzzles.LinesweeperGrid.GetPuzzles()
         ]);
 
         puzzleCollection.ChangePuzzle('LaserMirrorGrid1');

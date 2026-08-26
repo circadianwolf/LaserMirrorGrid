@@ -1,3 +1,6 @@
+export { EventManager };
+import { IterableWeakMap } from './IterableWeakMap.js';
+
 class EventManager extends EventTarget {
     #eventName;
     #listeners = new IterableWeakMap();

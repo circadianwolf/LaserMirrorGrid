@@ -1,3 +1,6 @@
+export { HitoriGrid };
+import { GridBase, GridPuzzle, ProgressTrack, CellBorders } from '../Modules.js';
+
 class HitoriGrid extends GridBase {
     static #puzzleInfo;
 

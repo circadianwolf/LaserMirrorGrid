@@ -1,3 +1,6 @@
+export { GridPuzzle };
+import { GridBase, ProgressTrack } from './index.js';
+
 class GridPuzzle {
     //#region Private Variables
 
@@ -54,18 +57,5 @@ class GridPuzzle {
 
     CreateGrid(canvasId, leftX, topY) {
         return new this.GridType.prototype.constructor(canvasId, leftX, topY, this.ProgressTracks, ...this.#arguments);
-    }
-}
-
-class ProgressTrack {
-    Name;
-    Display;
-    MaxValue;
-    ElementId;
-
-    constructor(name, display, maxValue) {
-        this.Name = name;
-        this.Display = display;
-        this.MaxValue = maxValue;
     }
 }

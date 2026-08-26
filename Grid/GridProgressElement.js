@@ -1,3 +1,5 @@
+export { GridProgressElement };
+
 class GridProgressElement extends HTMLElement {
     static observedAttributes = ["value"];
 

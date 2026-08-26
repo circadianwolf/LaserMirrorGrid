@@ -1,3 +1,5 @@
+export { IterableWeakMap };
+
 class IterableWeakMap {
     #weakMap = new WeakMap();
     #iterableMap = new Map();
